@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="fr" prefix="og: http://ogp.me/ns#">
+
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta content="Spécialiste de la mise en relation autour de l'automobile. Trouvez la bonne personne pour vous aider dans les réparations de votre voiture"
+          name="description" />
+    <meta content="HelpMyCar" name="application-name" />
+    <link rel="icon" href="~/img/logo.ico" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="yes" name="mobile-web-app-capable" />
+
+    <!-- CSS  -->
+    <link rel="stylesheet" media="all" href="~/css/Index.css">
+    <link rel="stylesheet" href="~/css/css-e/fontawesome-all.min.css">
+    @RenderSection("stylesheets", required: false)
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.0/font/bootstrap-icons.css">
+
+    <!-- Bootstrap JS -->
+    <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+</head>
+
+<body>
+    <div class="bg-white">
+        <div class="fixed-top">
+            <!--SECTION NAV-->
+            <nav class="navbar navbar-expand-lg navbar-light @ViewBag.ColorNav" id="navbar">
+                <a class="navbar-brand" href="~/Home/">
+                    <img alt="HelpMyCar" width="90" class="logo-brand-fr" src="~/img/logoHelpMyCar.png" />
+                </a>
+                <a class="navbar-brand d-none" href="~/Home/">
+                    <img alt="HelpMyCar" width="90" class="logo-brand-fr" src="~/img/logoHelpMyCar.png" />
+                </a>
+                <button class="navbar-toggler" data-target="#nav_site_help" data-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                @{
+                    var provider1 = new Pojeet.Models.Dal().ObtenirHelper(User.Identity.Name);
+                    var consumer1 = new Pojeet.Models.Dal().ObtenirConsumer(User.Identity.Name);
+                    int CountNotificationsMessagerie = 0;
+                    List<Pojeet.Models.NotificationTransaction> Notifications = null;
+
+                    if (consumer1 != null)
+                    {
+                        CountNotificationsMessagerie = new Pojeet.Models.Dal().countNotificationsMessagerie(consumer1.Profil.notificationsMessagerie);
+                       Notifications = new Pojeet.Models.Dal().ObtenirNotifications(consumer1.ProfilId);
+                    }
+                }
+                @if (@consumer1 != null && @provider1 != null && @consumer1.Id == @provider1.CompteConsumerId)
+                {
+                    <div class="collapse navbar-collapse" id="nav_site_help">
+                        <ul class="navbar-nav ml-auto nav-menu-icon">
+                            <li class="nav-item" style=" width: 180px !important">
+                                @Html.ActionLink("Trouvez une annonce", "AnnonceCatalogue", "Catalogue", null, null, null, null, new { @class = "nav-link nav-link-hover-green rounded btnGreen", @style = "color:white;" })
+                            </li>
+                            <li class="nav-item border-right ml-3 mr-1"></li>
+                            <li class="nav-item" style="padding-top: 5px;">
+                                <a href="@Url.Action("Index", "Profil")"><i class="font-size-24 iconNav fa fa-user" style="color: #2b6777; font-size: 24px; margin: 0 15px ;"> </i></a>
+                                <ul style="padding: 0;">
+                                    <div class="triangle"> </div>
+                                    <li class="mt-2">
+                                        <a href="~/Profil/Index">Mon profil</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Profil/Index?tabId=profile2">Mes annonce</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Profil/Index?tabId=contact2">Mes transactions</a>
+                                    </li>
+                                    <li style="border-radius: 0 0 5px 5px;">@Html.ActionLink("Déconnexion", "Deconnexion", "Login", null, null, null, null, new { @style = "border-radius: 0 0 5px 5px; color: red !important;" })</li>
+
+                                </ul>
+                            </li>
+
+
+                            <li class="nav-item d-flex align-items-center position-relative">
+                                <a href="@Url.Action("AfficherMessagerie", "Inbox")">
+
+                                    <i class="font-size-24 iconNav fa fa-envelope" style="color: #2b6777; font-size: 24px; margin: 0 15px;"></i>
+                                    @if (@consumer1.Profil.notificationsMessagerie != null)
+                                    {
+                                        <span class="badge badge-danger navbar-badge">@CountNotificationsMessagerie</span>
+                                    }
+
+                                </a>
+                            </li>
+                            <li class="nav-item notification" style="padding-top: 5px;">
+                                <a href="#">
+                                    <i class="font-size-24 iconNav fa fa-bell" style="color: #2b6777; font-size: 24px; margin: 0 15px;"></i>
+                                    @if (@consumer1.Profil.notifications != null)
+                                    {
+                                        <span class="badge badge-danger navbar-badge">@consumer1.Profil.notifications.Count()</span>
+                                    }
+                                </a>
+                                @if (@consumer1.Profil.notifications != null)
+                                {
+                                    @foreach (var notification in Notifications)
+                                    {
+                                        <ul style="padding: 0;">
+                                            <div class="triangle"> </div>
+
+                                            @if (notification.TypeNotification == Pojeet.Models.TypeNotification.Proposition_de_prix)
+                                            {
+                                                <li>
+                                                    <a href="/Profil/Index?tabId=contact2">@notification.transaction.Profil.Prenom vous propose un prix</a>
+                                                </li>
+                                            }
+
+                                            @if (notification.TypeNotification == Pojeet.Models.TypeNotification.Transaction_a_valider)
+                                            {
+                                                <li>
+                                                    <a href="/Profil/Index?tabId=contact2">Validez la transaction N° @notification.transaction.Reference</a>
+                                                </li>
+                                            }
+                                            @if (notification.TypeNotification == Pojeet.Models.TypeNotification.Laisser_un_avis)
+                                            {
+                                                @if (notification.transaction.ProfilId == @consumer1.ProfilId)
+                                                {
+                                                    <li>
+                                                        <a href="/Profil/Index?tabId=contact2">Laisser un avis à @notification.transaction.Annonce.profil.Prenom</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="/Profil/Index?tabId=contact2">Laisser un avis à @notification.transaction.Profil.Prenom</a>
+                                                    </li>
+
+                                                }
+                                            }
+                                        </ul>
+                                    }
+                                }
+                            </li>
+                            @*<li class="nav-item d-flex align-items-center">
+            @Html.ActionLink("Deconnexion", "Deconnexion", "Login", null, null, null, null, new { @class = "nav-link nav-link-hover-black rounded" })
+        </li>*@
+                        </ul>
+                    </div>
+
+                }
+                else if (@consumer1 == null && @provider1 == null)
+                {
+                    <div class="collapse navbar-collapse" id="nav_site_help">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item d-flex align-items-center" style=" width: 180px !important">
+                                @Html.ActionLink("Trouvez une annonce", "AnnonceCatalogue", "Catalogue", null, null, null, null, new { @class = "nav-link nav-link-hover-green rounded btnGreen", @style = "color:white" })
+                            </li>
+                            <li class="nav-item border-right ml-3 mr-1"></li>
+                            <li class="nav-item d-flex align-items-center">
+                                @Html.ActionLink("Devenez Helper", "CreerHelper", "Login", null, null, null, null, new { @class = "nav-link nav-link-hover-black rounded" })
+                            </li>
+                            <li class="nav-item d-flex align-items-center">
+                                @Html.ActionLink("Connexion", "Index", "Login", null, null, null, null, new { @class = "nav-link nav-link-hover-black rounded" })
+                            </li>
+                            <li class="nav-item d-flex align-items-center">
+                                @Html.ActionLink("Inscription", "CreerCompte", "Login", null, null, null, null, new { @class = "nav-link nav-link-hover-black rounded" })
+                            </li>
+                        </ul>
+                    </div>
+                }
+                else if (@consumer1 != null && @provider1 == null)
+                {
+                    <div class="collapse navbar-collapse" id="nav_site_help">
+                        <ul class="navbar-nav ml-auto nav-menu-icon">
+                            <li class="nav-item d-flex align-items-center" style=" width: 180px !important">
+                                @Html.ActionLink("Trouvez une annonce", "AnnonceCatalogue", "Catalogue", null, null, null, null, new { @class = "nav-link nav-link-hover-green rounded btnGreen", @style = "color:white" })
+                            </li>
+                            <li class="nav-item border-right ml-3 mr-1"></li>
+                            <li class="nav-item" style="padding-top: 5px;">
+                                <a href="@Url.Action("Index", "Profil")"><i class="font-size-24 iconNav fa fa-user" style="color: #2b6777; font-size: 24px; margin: 0 15px ;"> </i></a>
+                                <ul style="padding: 0;">
+                                    <div class="triangle"> </div>
+                                    <li class="mt-2">
+                                        <a href="~/Profil/Index">Mon profil</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Profil/Index?tabId=profile2">Mes annonce</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Profil/Index?tabId=contact2">Mes transactions</a>
+                                    </li>
+                                    <li style="border-radius: 0 0 5px 5px;">@Html.ActionLink("Déconnexion", "Deconnexion", "Login", null, null, null, null, new { @style = "border-radius: 0 0 5px 5px; color: red !important;" })</li>
+
+                                </ul>
+                            </li>
+
+                            <li class="nav-item d-flex align-items-center position-relative">
+                                <a href="@Url.Action("AfficherMessagerie", "Inbox")">
+
+                                    <i class="font-size-24 iconNav fa fa-envelope" style="color: #2b6777; font-size: 24px; margin: 0 15px;"></i>
+                                    @if (@consumer1.Profil.notificationsMessagerie != null)
+                                    {
+                                        <span class="badge badge-danger navbar-badge">@CountNotificationsMessagerie</span>
+                                    }
+
+                                </a>
+                               
+                            </li>
+                            <li class="nav-item notification" style="padding-top: 5px;">
+                                <a href="#">
+                                    <i class="font-size-24 iconNav fa fa-bell" style="color: #2b6777; font-size: 24px; margin: 0 15px;"></i>
+                                    @if (@consumer1.Profil.notifications != null)
+                                    {
+                                        <span class="badge badge-danger navbar-badge">@consumer1.Profil.notifications.Count()</span>
+                                    }
+                                </a>
+                                @if (@consumer1.Profil.notifications != null)
+                                {
+                                    @foreach (var notification in Notifications)
+                                    {
+                                        <ul style="padding: 0;">
+                                            <div class="triangle"> </div>
+
+                                            @if (notification.TypeNotification == Pojeet.Models.TypeNotification.Proposition_de_prix)
+                                            {
+                                                <li>
+                                                    <a href="/Profil/Index?tabId=contact2">@notification.transaction.Profil.Prenom vous propose un prix</a>
+                                                </li>
+                                            }
+
+                                            @if (notification.TypeNotification == Pojeet.Models.TypeNotification.Transaction_a_valider)
+                                            {
+                                                <li>
+                                                    <a href="/Profil/Index?tabId=contact2">Validez la transaction N° @notification.transaction.Reference</a>
+                                                </li>
+                                            }
+                                            @if (notification.TypeNotification == Pojeet.Models.TypeNotification.Laisser_un_avis)
+                                            {
+                                                @if (notification.transaction.ProfilId == @consumer1.ProfilId)
+                                                {
+                                                    <li>
+                                                        <a href="/Profil/Index?tabId=contact2">Laisser un avis à @notification.transaction.Annonce.profil.Prenom</a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="/Profil/Index?tabId=contact2">Laisser un avis à @notification.transaction.Profil.Prenom</a>
+                                                    </li>
+
+                                                }
+                                            }
+                                        </ul>
+
+
+
+                                    }
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                }
+
+
+            </nav>
+        </div>
+
+        <div>
+            @RenderBody()
+        </div>
+
+        <!-- Footer -->
+        <footer style=" line-height: 1.8rem; background-color: #2b6777;">
+            <div class="d-flex row p-4 justify-content-around" style="border-bottom: 1px solid white;">
+                <div class="d-flex flex-column">
+                    <span class="font-bold" style="color:white">A propos</span>
+                    <a href="#" style="color:white">Qui sommes-nous</a>
+                    <a href="#" style="color:white">Demander un service</a>
+                    <a href="#" style="color:white">Devenir Helper</a>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span class="font-bold" style="color:white">Informations légales</span>
+                    <a href="#" style="color:white">Conditions générales client</a>
+                    <a href="#" style="color:white">Conditions générales Helper</a>
+                    <a href="#" style="color:white">Confiance et sécurité</a>
+                </div>
+
+                <div class="d-flex flex-column">
+                    <span class="font-bold" style="color:white">Assistance</span>
+                    <a href="#" style="color:white">Centre d'aide</a>
+                    <a href="@Url.Action("Aide", "Aide")" style="color:white">Contact</a>
+                </div>
+
+            </div>
+            <div class="mb-md-0 font-weight-bold text-center">© <a href="#" class="font-weight-bold text-gray-90" style="color:white;">2021  MyHelpCar</a> - All rights Reserved</div>
+        </footer>
+        <!-- Footer -->
+    </div>
+
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

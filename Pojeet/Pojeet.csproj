@@ -1,0 +1,106 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\Dal\**" />
+    <Compile Remove="wwwroot\media\provider\**" />
+    <Content Remove="Models\Dal\**" />
+    <Content Remove="wwwroot\media\provider\**" />
+    <EmbeddedResource Remove="Models\Dal\**" />
+    <EmbeddedResource Remove="wwwroot\media\provider\**" />
+    <None Remove="Models\Dal\**" />
+    <None Remove="wwwroot\media\provider\**" />
+    <Content Remove="wwwroot\media\" />
+    <Content Remove="wwwroot\media\profil\" />
+    <Content Remove="wwwroot\media\annonce\" />
+    <Content Remove="wwwroot\media\provider\" />
+    <None Remove="HtmlAgilityPack" />
+    <Content Remove="wwwroot\html\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.15">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.5" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.37" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\css\" />
+    <Content Remove="wwwroot\js\" />
+    <Content Remove="wwwroot\img\" />
+    <Content Remove="wwwroot\js\EmptyJSFile.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Login\" />
+    <Folder Include="Views\Profil\" />
+
+    <Folder Include="wwwroot\css\css-e\gf\" />
+    <Folder Include="wwwroot\img\img-e\gf\" />
+    <Folder Include="wwwroot\js\js-e\gf\" />
+
+
+
+
+    <Folder Include="wwwroot\media\provider\" />
+    <Folder Include="wwwroot\media\profil\" />
+    <Folder Include="wwwroot\media\annonce\" />
+
+    <Folder Include="wwwroot\html\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Views\Home\" />
+    <None Remove="Views\Login\" />
+    <None Remove="ViewModels\" />
+    <None Remove="Views\Profil\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\css-e\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\css\css-e\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\css\css-e\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\css\css-e\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\css\css-e\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\css\css-e\fontawesome-free\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\css\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\css\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\css\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\css\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\css\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\css\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\js\js-e\Gf\bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\js\js-e\Gf\chart.js\Chart.bundle.js" />
+    <None Include="wwwroot\js\js-e\Gf\chart.js\Chart.bundle.min.js" />
+    <None Include="wwwroot\js\js-e\Gf\chart.js\Chart.js" />
+    <None Include="wwwroot\js\js-e\Gf\chart.js\Chart.min.js" />
+    <None Include="wwwroot\js\js-e\Gf\jquery\jquery.js" />
+    <None Include="wwwroot\js\js-e\Gf\jquery\jquery.min.js" />
+    <None Include="wwwroot\js\js-e\Gf\jquery\jquery.min.map" />
+    <None Include="wwwroot\js\js-e\Gf\jquery\jquery.slim.js" />
+    <None Include="wwwroot\js\js-e\Gf\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\js\js-e\Gf\jquery\jquery.slim.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\img\avatar_exemple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\media\profil\avatar_exemple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

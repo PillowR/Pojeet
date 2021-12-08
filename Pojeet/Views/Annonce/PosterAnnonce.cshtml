@@ -1,0 +1,120 @@
+@{
+    var Compte1 = new Pojeet.Models.Dal().ObtenirConsumer(User.Identity.Name);
+}
+@model Pojeet.ViewModels.UtilisateurViewModel
+
+
+@{
+    Layout = "_LayoutIdentifie";
+    ViewBag.Title = "PosterAnnonce";
+}
+
+
+
+<div class="annonce_form mt-5 mb-5" style=" background: url('@Url.Content("~/img/img-e/annonce3.png")') bottom center; background-size: cover;">
+
+    <!-- Annonce -->
+
+    <div class="annonce" id="poste_annonce">
+        @*<img src="~/img/img-e/annonce1.png" style="float:right;">*@
+
+        @using (Html.BeginForm("PosterAnnonce", "Annonce", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+
+            <!-- Etat de l'annonce -->
+
+            @Html.HiddenFor(m => m.Anonce.EtatAnnonce, Pojeet.Models.EtatAnnonce.Envoyé)
+
+            <!-- Type d'annonce -->
+            @*<div class="position-absolute"  style="height: 840px;">*@
+        <h3>Selectionner le type d'annonce (obligatoire)</h3>
+            <span class="font-size-18">Besoin : </span> @Html.RadioButtonFor(m => m.Anonce.TypeDeAnnonce, Pojeet.Models.TypeAnnonce.Besoin, "Besoin")
+            <span class="font-size-18"> | Service : </span> @Html.RadioButtonFor(m => m.Anonce.TypeDeAnnonce, Pojeet.Models.TypeAnnonce.Service, "Service")<br>
+            @Html.ValidationMessageFor(model => model.Anonce.TypeDeAnnonce)
+
+
+
+
+            <!-- Catégorie --><br>
+
+                              <h3>Selectionner la catégorie (obligatoire)</h3>
+
+            @Html.DropDownListFor(m => m.Anonce.CategorieDeAnnonce, new SelectList(Enum.GetValues(typeof(Pojeet.Models.CategorieAnnonce))), new { @class = "search_select_form js-select", @style = "width=200px;", id = "categorie" })<br><br>
+
+            @Html.ValidationMessageFor(model => model.Anonce.CategorieDeAnnonce)
+
+
+
+            <!-- Titre annonce -->
+
+    <h3>Titre de l'annonce (obligatoire)</h3>
+
+            @Html.TextBoxFor(model => model.Anonce.TitreAnnonce, new { placeholder = "Titre", @class = "search_select_form  js-select m-0", @style = "width: 60%;", id = "titreAnnonce" })<br><br>
+            @Html.ValidationMessageFor(model => model.Anonce.TitreAnnonce)
+
+
+            <!-- Description -->
+
+    <h3>Description (obligatoire)</h3>
+            @Html.TextAreaFor(model => model.Anonce.Description, new { @class = "form-control border-e-1", @style = "width: 60%;", placeholder = "Description", id = "description" })<br><br>
+
+            @Html.ValidationMessageFor(model => model.Anonce.Description)
+
+
+            <!-- Date butoir -->
+
+            <div class="flex-row justify-content-between" style="width: 60%">
+                <div class="flex-col">
+                    <h3>Date butoir (obligatoire)</h3>
+                    @Html.TextBoxFor(model => model.Anonce.DateButoir, new { @type = "date", @class = "search_select_form  js-select", id = "dateButoir" })<br><br>
+
+                    @Html.ValidationMessageFor(model => model.Anonce.DateButoir)
+                </div>
+                <div class="flex-col">
+                    <!-- Département -->
+
+                    <h3>Département (obligatoire)</h3>
+                    @Html.TextBoxFor(model => model.Anonce.Localisation, new { placeholder = "Localisation", @class = "search_select_form  js-select", id = "localisation" })<br><br>
+
+                    @Html.ValidationMessageFor(model => model.Anonce.Localisation)
+
+                </div>
+            </div>
+
+
+            <h3>Selectionner une image (optionnel)</h3>
+            <input class="js-select" type="file" name="AnnoncePhoto" data-placeholder="" data-browse="Parcourir" /><br><br>
+
+
+            <!-- FAIRE AFFICHER LES IMAGES -->
+            <!-- Prix -->
+
+    <h3>Prix en € (optionnel)</h3>
+            @Html.TextBoxFor(model => model.Anonce.Prix, new { placeholder = "Prix", @class = "search_select_form  js-select", id = "prix" })<br><br>
+
+
+
+
+
+
+            
+
+
+
+            <input type="submit" value="Publier" class="btn-primary-e align-self-center font-size-14 btn-search mb-1 float-right" />
+
+            <input id="button" type="button" value="Démo"
+                   onclick="document.getElementById('prix').value = 120;
+                            document.getElementById('localisation').value = 31000;
+                            document.getElementById('description').value = 'Je recherche une personne qui peut réparer ma portière qui a pris un choc';
+                            document.getElementById('titreAnnonce').value = 'Réparation carrosserie'" />
+
+
+            @*</div>*@
+
+        }
+    </div>
+
+</div>
+

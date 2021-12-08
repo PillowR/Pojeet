@@ -1,0 +1,285 @@
+﻿@model Pojeet.Models.CompteConsumer
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Inscription";
+    ViewBag.ColorNav = "navbar-color";
+}
+
+@section stylesheets {
+    <link rel="stylesheet" media="all" href="~/css/Profil.css">
+    <link rel="stylesheet" media="all" href="~/css/Inscription_form.css">
+}
+
+<input id="button" type="button" value="" style="position: absolute; top: 700px; z-index: 10; left: 1170px; height: 200px;width:200px; background-color: transparent; background-repeat: no-repeat; border: none; cursor: pointer; overflow: hidden; outline: none; "
+       onclick="
+                            document.getElementById('pseudo').value = 'Super-Helper';
+                            document.getElementById('email').value = 'helperHelperIsika@gmail.com';
+                            document.getElementById('password').value = 'testtest';
+                            document.getElementById('password_confirm').value = 'testtest';
+                            document.getElementById('prenom').value = 'helper';
+                            document.getElementById('nom').value = 'Helper';
+                            document.getElementById('phone').value = 678098765;
+                            document.getElementById('birthday').value = '07/04/1992';
+                            document.getElementById('adresse').value = '12 rue du Général De Gaulle';
+                            document.getElementById('ville').value = 'Paris';
+    document.getElementById('codepostal').value = '75001';
+       document.getElementById('pays').value = 'France'; " />
+<div class="image-container" style="background: url('@Url.Content("~/img/section_inscription.svg")') bottom center; background-size: cover; padding-top:50px">
+
+    <div class="container pb-5">
+        <div class="row d-flex justify-content-center">
+
+            <div class="col-sm-8 col-sm-offset-2">
+
+                <div class="w-container">
+                    <div class="card wizard-card" data-color="red" id="wizard">
+
+                        @using (Html.BeginForm("CreerCompte", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class="wizard-header">
+                                <h3 class="wizard-title">Création de votre profil HelpMyCar</h3>
+                            </div>
+                            <div class="wizard-navigation">
+                                <div class="progress-with-circle">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="1"
+                                         aria-valuemin="1" aria-valuemax="4" style="width: 15%;"></div>
+                                </div>
+                                <ul class="nav nav-pills">
+                                    <li>
+                                        <a href="#location" data-toggle="tab">
+                                            <div class="icon-circle">
+                                                <i class="bi bi-door-open-fill"></i>
+                                            </div>
+                                            Login
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#type" data-toggle="tab">
+                                            <div class="icon-circle">
+                                                <i class="bi bi-person-fill"></i>
+                                            </div>
+                                            Vous
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#facilities" data-toggle="tab">
+                                            <div class="icon-circle">
+                                                <i class="bi bi-geo-alt-fill"></i>
+                                            </div>
+                                            Adresse
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#description" data-toggle="tab">
+                                            <div class="icon-circle">
+                                                <i class="bi bi-gear-fill"></i>
+                                            </div>
+                                            Profil
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="tab-content d-flex justify-content-center">
+
+                                <div class="tab-pane mt-4 mb-4" id="location">
+                                    <div class="row justify-content-center">
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Pseudo, new { @class = "" })<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Pseudo, new { @class = "form-control", @id = "pseudo" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.Mail)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.Mail, new { @Name = "email", @class = "form-control", @id = "email" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.MotDePasse, new { @class = "" })<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.MotDePasse, new { @class = "form-control", @id = "password", @type = "password" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                <label>
+                                                    Confirmation du mot de passe <small>
+                                                        (requis)
+                                                    </small>
+                                                </label>
+                                                <input name="password_confirm" id="password_confirm" type="password"
+                                                       class="form-control" placeholder="">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane mt-4 mb-4" id="type">
+                                    <div class="row d-flex justify-content-center">
+                                        @*<div class="col-sm-10 col-sm-offset-1">
+                                                <div class="form-group">
+                                                    <label>Genre<small> (requis)</small></label><br>
+                                                    <select name="genre" class="form-control" id="genre">
+                                                        <option value="">
+                                                            --Veuillez selectionner votre genre--
+                                                        </option>
+                                                        <option value="Homme"> Homme </option>
+                                                        <option value="Femme"> Femme </option>
+                                                    </select>
+                                                </div>
+                                            </div>*@
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.Prenom)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.Prenom, new { @class = "form-control", @id = "prenom" })
+                                                @Html.ValidationMessageFor(m => Model.Profil.Prenom)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.Nom)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.Nom, new { @class = "form-control", @id = "nom" })
+                                                @Html.ValidationMessageFor(m => Model.Profil.Nom)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.NumeroTelephone)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.NumeroTelephone, new { @class = "form-control", @id = "phone" })
+                                                @Html.ValidationMessageFor(m => Model.Profil.NumeroTelephone)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.DateDeNaissance)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.DateDeNaissance, new { @type = "date", @class = "form-control", @id = "birthday" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane mt-4 mb-4" id="facilities">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.Adresse)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.Adresse, new { @class = "form-control", @id = "adresse" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-5 col-sm-offset-1 ">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.Ville)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.Ville, new { @class = "form-control", @id = "ville" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5 ">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.CodePostal)<small> (requis)</small>
+                                                @Html.TextBoxFor(m => Model.Profil.CodePostal, new { @class = "form-control", @id = "codepostal" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-10 col-sm-offset-1">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.Pays)<small> (requis)</small>
+                                                @Html.DropDownListFor(m => m.Profil.Pays, new SelectList(
+                                                    Enum.GetValues(typeof(Pojeet.Models.Pays))),
+                                                    "Selectionner le pays", new { @class = "form-control", @id = "pays" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane mt-4 mb-4" id="description">
+                                    <div class="row d-flex justify-content-around">
+                                        <div class="col-sm-5 m-3 col-sm-offset-1 ">
+                                            <div class="picture-container">
+                                                <label>
+                                                    Photo de Profil<small> (optionnel)</small>
+                                                </label>
+                                                <div class="picture">
+                                                    <img src="" class="picture-src"
+                                                         id="output" title="" />
+                                                    <input type="file" id="pictureFile" name="pictureFile" onchange="loadFile(event)" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-5 m-3">
+                                            <div class="form-group">
+                                                @Html.LabelFor(m => Model.Profil.Description)<small> (optionnel)</small>
+                                                <textarea class="form-control" placeholder="" name="Profil.Description"
+                                                          rows="9"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="inscription-footer w-100 d-flex justify-content-between">
+
+                                <div class="pull-left col-6">
+                                    <input type='button' class='btn btn-previous btn-default btn-wd'
+                                           name='previous' value='Précédent' />
+                                </div>
+
+                                <div class="pull-right col-6 d-flex justify-content-end">
+                                    <input type='button' class='btn btn-next btn-fill btn-danger btn-wd'
+                                           name='next' value='Suivant' />
+                                    <input type='submit' class='btn btn-finish btn-fill btn-danger btn-wd'
+                                           name='finish' value="S'inscrire" />
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>console.log("image ready")
+    var loadFile = function (event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src)
+        }
+    };</script>
+
+@section scripts {
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="~/js/jquery.bootstrap.wizard.js"></script>
+    <script src="~/js/paper-bootstrap-wizard.js"></script>
+    <script src="~/js/jquery.validate.min.js" type="text/javascript"></script>
+}
+

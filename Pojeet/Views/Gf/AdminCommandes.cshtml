@@ -1,0 +1,140 @@
+﻿
+@model Pojeet.ViewModels.TransactionViewModel
+@{
+    Layout = "_LayoutAdmin";
+    ViewBag.Title = "Les commandes";
+}
+<div class="content-wrapper h-100 commande">
+    <!-- Content Header (Page header) -->
+    <div class="content-header pl-3">
+        <h1 class="pt-4 pl-4 mb-2 font-size-16">Commandes</h1>
+    </div>
+    <!-- /.content-header -->
+    <!-- Small boxes (Stat box) -->
+    <div class="flex-row small_box_list">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>@Model.Transaction.Count</h3>
+
+                    <p>Transaction</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mois en cours</a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>@Model.Argent.ChiffreDaffaire € <sup style="font-size: 18px">TTC</sup></h3>
+
+                    <p>Chiffre d'affaire</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mois en cours</a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>@Model.listConsumer.Count</h3>
+
+                    <p>Nouveaux Consumers</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mois en cours</a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>@Model.Argent.MargeBrut €</h3>
+
+                    <p>Marge brut</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mois en cours</a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- End Small boxes (Stat box) -->
+    <input class="form-control border-e mt-3" id="myInput" type="text" placeholder="Recherche">
+    <br>
+    <div class="table_commandes">
+        <table class="table table-hover border-e w-80 table_sort">
+            <thead>
+                <tr>
+                    <th scope="col">N°</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Helper</th>
+                    <th scope="col">Consumer</th>
+                    <th scope="col">Montant</th>
+                    <th scope="col">Statut</th>
+                </tr>
+            </thead>
+            <tbody id="commande">
+                @foreach (var transaction in Model.Transaction)
+                {
+                    <tr>
+
+                        <th scope="row"><a href="@Url.Action("Commande", "Gf", new { reference = transaction.Reference})">@transaction.Reference</a></th>
+                        <td>@transaction.Date</td>
+                        @if (transaction.Annonce.TypeDeAnnonce == Pojeet.Models.TypeAnnonce.Besoin)
+                        {
+
+                            <td><a href="@Url.Action("Helper", "Gf", new { id = transaction.Profil.Id})">@transaction.Profil.Prenom @transaction.Profil.Nom </a></td>
+                        }
+                        else
+                        {
+                            <td><a href="@Url.Action("Helper", "Gf", new {id = transaction.Annonce.profil.Id})">@transaction.Annonce.profil.Prenom @transaction.Annonce.profil.Nom</a></td>
+                        }
+                        @if (transaction.Annonce.TypeDeAnnonce == Pojeet.Models.TypeAnnonce.Service)
+                        {
+
+
+                            <td><a href="@Url.Action("Consumer", "Gf", new { id = transaction.Profil.Id})">@transaction.Profil.Prenom @transaction.Profil.Nom </a></td>
+                        }
+                        else
+                        {
+                            <td><a href="@Url.Action("Consumer", "Gf", new {id = transaction.Annonce.profil.Id})">@transaction.Annonce.profil.Prenom @transaction.Annonce.profil.Nom</a></td>
+                        }
+
+                        <td>@transaction.Montant</td>
+                        <td>
+                            @if (transaction.EtatTransaction == Pojeet.Models.EtatTransaction.En_attente)
+                            {<p>En_attente</p>}
+                            else if (transaction.EtatTransaction == Pojeet.Models.EtatTransaction.Valide)
+                            { <p>Valide</p>}
+                            else if (transaction.EtatTransaction == Pojeet.Models.EtatTransaction.Paye)
+                            { <p>Payé</p>}
+                            else if (transaction.EtatTransaction == Pojeet.Models.EtatTransaction.Effectue)
+                            { <p>Effectue</p>}
+                            else if (transaction.EtatTransaction == Pojeet.Models.EtatTransaction.Refuse)
+                            { <p>Refuse</p>}
+                            else
+                            { <p>Termine</p>}
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
